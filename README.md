@@ -1,6 +1,6 @@
-# X-autodownload-likes
+# my_x_downloader
 
-X-autodownload-likes 是一个自动扫描你在 X（Twitter）上点赞的列表，并下载其中未曾保存的媒体内容（图片、视频）的工具。该项目基于
+my_x_downloader 是一个自动扫描你在 X（Twitter）上点赞的列表，并下载其中未曾保存的媒体内容（图片、视频）的工具。该项目基于
 Python 实现，并结合了 twitter-media-downloader 命令行工具和直接调用 X 内部 GraphQL API 的方式来实现数据获取与媒体下载。
 
 > **注意**：本项目需要提前生成认证 Cookies 文件和私有配置信息。请先从浏览器开发者工具中复制完整的 curl 命令（包括所有请求头和
@@ -11,7 +11,7 @@ Python 实现，并结合了 twitter-media-downloader 命令行工具和直接�
 ## 目录结构
 
 ```
-X-autodownload-likes/
+my_x_downloader/
 ├── src/
 │   ├── config.py            # 配置文件，包含 API 信息、下载目录、代理设置等参数，从 data/private_tokens.env 加载敏感信息
 │   ├── setup.py             # 初始化个人信息：从 curl 命令解析认证信息，生成 twmd_cookies.json 和 data/private_tokens.env
