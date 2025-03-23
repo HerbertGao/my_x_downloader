@@ -84,9 +84,8 @@ X-autodownload-likes/
 
 ## 注意事项
 
-- 请确保在运行前正确修改 config/config.py 中所有需要的参数，确保目录路径正确，并且有足够权限写入文件。
+- 请确保在运行前正确修改 .env 中所有需要的参数，确保目录路径正确，并且有足够权限写入文件。
 - 生成的 twmd_cookies.json 和 data/private_tokens.env 文件非常重要，必须保证其有效，否则下载过程可能因认证失败而中断。
-- 初始化完成后，请将 .env 中涉及 USER_ID 和 BEARER_TOKEN 的字段移除，改为从 data/private_tokens.env 加载，避免敏感信息泄露。
 - 项目生成的所有数据（下载文件、日志、Mock 数据等）均归类到各自目录中，请定期备份或清理 data 目录。
 
 ## License
