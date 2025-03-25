@@ -34,7 +34,7 @@ my_x_downloader/
    ```
 
 2. **配置参数修改**  
-   在运行前，请根据需要修改 `config/config.py` 中的关键参数，主要包括：
+   在运行前，请根据需要修改 `.env` 中的关键参数，主要包括：
 
    - **MOCK_MODE** 与 **MOCK_LIKED_TWEETS_FILE**：若启用 Mock 模式，需更新相应文件路径
    - **DOWNLOAD_DIR**：媒体下载的基础目录（建议保持在 data/downloads/ 下）

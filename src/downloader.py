@@ -1,7 +1,6 @@
 import os
 import subprocess
-
-import requests
+import platform
 
 import config
 
@@ -20,24 +19,27 @@ def save_downloaded_id(tweet_id):
     with open(DOWNLOAD_RECORD, "a", encoding="utf-8") as f:
         f.write(tweet_id + "\n")
 
+def get_twmd_tool_path():
+    system = platform.system().lower()  # 获取操作系统类型
+    arch = platform.architecture()[0]  # 获取操作系统架构
 
-def download_file(url, save_path):
-    try:
-        proxies = None
-        if config.ENABLE_PROXY:
-            proxies = {
-                "http": config.SOCKS_PROXY,
-                "https": config.SOCKS_PROXY
-            }
-            # print("媒体下载使用 SOCKS5 代理:", proxies)
-        r = requests.get(url, stream=True, timeout=30, proxies=proxies)
-        r.raise_for_status()
-        with open(save_path, "wb") as f:
-            for chunk in r.iter_content(chunk_size=8192):
-                f.write(chunk)
-        print(f"下载成功：{save_path}")
-    except Exception as e:
-        print(f"下载失败：{url}，错误：{e}")
+    # 判断操作系统类型和架构并返回对应的工具路径
+    if system == "darwin":
+        if arch == "64bit":
+            return os.path.join("twmd", "twmd-darwin-amd64")
+        elif arch == "arm64":
+            return os.path.join("twmd", "twmd-darwin-arm64")
+    elif system == "linux":
+        if arch == "64bit":
+            return os.path.join("twmd", "twmd-linux-amd64")
+        elif arch == "arm64":
+            return os.path.join("twmd", "twmd-linux-arm64")
+    elif system == "windows":
+        if arch == "64bit":
+            return os.path.join("twmd", "twmd-windows-amd64.exe")
+    else:
+        raise Exception(f"不支持的操作系统：{system} {arch}")
+
 
 
 def call_media_downloader(tweet_id, output_dir=None):
@@ -48,9 +50,13 @@ def call_media_downloader(tweet_id, output_dir=None):
         output_dir = config.DOWNLOAD_DIR
     os.makedirs(output_dir, exist_ok=True)
     file_format = config.FILE_FORMAT if hasattr(config, "FILE_FORMAT") else "{USERNAME} {ID}"
+
+    # 获取工具路径
+    tool_path = get_twmd_tool_path()
+
     # 构造命令行调用
     cmd = [
-        "./twitter-media-downloader",
+        f"./{tool_path}",
         f"--tweet={tweet_id}",
         "--all",
         f"--output={output_dir}",
@@ -68,12 +74,3 @@ def call_media_downloader(tweet_id, output_dir=None):
     else:
         print("下载成功：", result.stdout)
         return True
-
-
-if __name__ == "__main__":
-    test_tweet_id = "1896117448191176953"
-    output_dir = os.path.join(config.DOWNLOAD_DIR, "twitter", "example_user")
-    if call_media_downloader(test_tweet_id, output_dir):
-        print("处理完成")
-    else:
-        print("处理失败")
