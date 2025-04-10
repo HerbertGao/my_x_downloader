@@ -1,3 +1,4 @@
+from config import AUTO_ORGANIZE, DOWNLOAD_DIR, TARGET_DIR
 from downloader import load_downloaded_ids, save_downloaded_id, call_media_downloader
 from x_api import get_liked_tweets_internal
 
@@ -26,6 +27,12 @@ def main():
         if call_media_downloader(tweet_id):
             save_downloaded_id(tweet_id)
     print("全部处理完成。")
+
+    if AUTO_ORGANIZE:
+        print("开始整理下载的文件目录...")
+        from organize_files import organize_files
+        organize_files(DOWNLOAD_DIR, TARGET_DIR)
+
 
 if __name__ == "__main__":
     main()

@@ -43,15 +43,21 @@ DOWNLOAD_DIR = os.getenv("DOWNLOAD_DIR", "data/downloads")
 # 下载记录文件，保存已处理 tweet 的 ID，避免重复下载
 DOWNLOAD_RECORD = os.getenv("DOWNLOAD_RECORD", "data/downloaded_tweet_ids.txt")
 
+# 文件命名格式（例如使用 {USERNAME} 作为模板变量）
+FILE_FORMAT = os.getenv("FILE_FORMAT", "{USERNAME} {ID}")
+
+# 自动整理目录开关（True 表示自动整理，False 表示不整理）
+AUTO_ORGANIZE = os.getenv("AUTO_ORGANIZE", "False").lower() in ("true", "1", "yes")
+
+# 目标路径，用于整理归类下载的文件，默认目标目录为 "data/organized"
+TARGET_DIR = os.getenv("TARGET_DIR", "data/organized")
+
 # 代理设置：ENABLE_PROXY 为开关，若为 True 则使用代理
 ENABLE_PROXY = os.getenv("ENABLE_PROXY", "True").lower() in ("true", "1", "yes")
 
 # 分别配置 HTTP 和 SOCKS5 代理
 HTTP_PROXY = os.getenv("HTTP_PROXY", "http://127.0.0.1:7890")
 SOCKS_PROXY = os.getenv("SOCKS_PROXY", "socks5://127.0.0.1:7891")
-
-# 文件命名格式（例如使用 {USERNAME} 作为模板变量）
-FILE_FORMAT = os.getenv("FILE_FORMAT", "{USERNAME} {ID}")
 
 # 内部 API 的配置
 LIKES_API_URL = os.getenv("LIKES_API_URL", "https://x.com/i/api/graphql/nWpDa3j6UoobbTNcFu_Uog/Likes")
